@@ -210,22 +210,25 @@ export default function LoginPage() {
           </div>
 
           {/* TekvoLabs Branding */}
-          <div className="text-center pt-4 border-t border-gray-100 mt-4">
-            <div className="flex items-center justify-center space-x-2 text-xs text-gray-500">
-              <span>Powered by</span>
-              <a 
-                href="https://tekvolabs.com/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center space-x-1 hover:text-gray-700 transition-colors"
-              >
-                <img 
-                  src="/tekvolabs-logo.png" 
-                  alt="TekvoLabs" 
-                  className="w-4 h-4 object-contain"
-                />
-                <span className="font-medium">TekvoLabs</span>
-              </a>
+          <div className="text-center pt-6 border-t border-gray-100 mt-6">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border border-blue-100">
+              <div className="flex items-center justify-center space-x-3 text-sm text-gray-700">
+                <span className="font-medium">Powered by</span>
+                <a 
+                  href="https://tekvolabs.com/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 hover:text-blue-600 transition-colors group"
+                >
+                  <img 
+                    src="/tekvolabs-logo.png" 
+                    alt="TekvoLabs" 
+                    className="w-6 h-6 object-contain group-hover:scale-110 transition-transform"
+                  />
+                  <span className="font-bold text-slate-800 group-hover:text-blue-600">TekvoLabs</span>
+                </a>
+              </div>
+              <p className="text-xs text-gray-500 mt-2">Building the future of business software</p>
             </div>
           </div>
         </CardContent>
