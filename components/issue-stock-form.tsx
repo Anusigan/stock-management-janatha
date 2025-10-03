@@ -73,24 +73,46 @@ export function IssueStockForm({ items, sizes }: IssueStockFormProps) {
 
     setIsSubmitting(true)
 
-    const { error } = await supabase.from("stock_transactions").insert({
-      transaction_date: format(date, "yyyy-MM-dd"),
-      item_id: itemId,
-      size_id: sizeId,
-      brand: brand.trim(),
-      received_quantity: 0,
-      issued_quantity: qty,
-      balance: -qty,
-      transaction_type: "Issued",
-      customer_id: customerId,
-      // Shared workspace mode - no user_id needed
-      delivery_order_number: deliveryOrderNumber.trim(),
-    })
+    try {
+      // Get the latest balance for this item/size/brand combination
+      const { data: latestTransaction } = await supabase
+        .from("stock_transactions")
+        .select("balance")
+        .eq("item_id", itemId)
+        .eq("size_id", sizeId)
+        .eq("brand", brand.trim())
+        .order("transaction_date", { ascending: false })
+        .order("created_at", { ascending: false })
+        .limit(1)
 
-    if (error) {
-      alert("Error issuing stock: " + error.message)
-    } else {
-      // Reset form
+      // Calculate new balance: previous balance - issued quantity
+      const previousBalance = latestTransaction?.[0]?.balance || 0
+      const newBalance = previousBalance - qty
+
+      // Check if there's enough stock
+      if (newBalance < 0) {
+        alert(`Insufficient stock! Available: ${previousBalance}, Requested: ${qty}`)
+        setIsSubmitting(false)
+        return
+      }
+
+      const { error } = await supabase.from("stock_transactions").insert({
+        transaction_date: format(date, "yyyy-MM-dd"),
+        item_id: itemId,
+        size_id: sizeId,
+        brand: brand.trim(),
+        received_quantity: 0,
+        issued_quantity: qty,
+        balance: newBalance,
+        transaction_type: "Issued",
+        customer_id: customerId,
+        // Shared workspace mode - no user_id needed
+        delivery_order_number: deliveryOrderNumber.trim(),
+      })
+
+      if (error) throw error
+
+      // Reset form on success
       setDate(new Date())
       setItemId("")
       setSizeId("")
@@ -100,6 +122,9 @@ export function IssueStockForm({ items, sizes }: IssueStockFormProps) {
       setDeliveryOrderNumber("")
       alert("Stock issued successfully!")
       router.refresh()
+
+    } catch (error: any) {
+      alert("Error issuing stock: " + (error?.message || "Unknown error"))
     }
 
     setIsSubmitting(false)

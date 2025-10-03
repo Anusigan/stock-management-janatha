@@ -64,23 +64,38 @@ export function AddStockForm({ items, sizes }: AddStockFormProps) {
 
     setIsSubmitting(true)
 
-    const { error } = await supabase.from("stock_transactions").insert({
-      transaction_date: format(date, "yyyy-MM-dd"),
-      item_id: itemId,
-      size_id: sizeId,
-      brand: brand.trim(),
-      received_quantity: qty,
-      issued_quantity: 0,
-      balance: qty,
-      transaction_type: transactionType,
-      grn_number: transactionType !== "Balance Forward" ? grnNumber.trim() : null,
-      // Shared workspace mode - no user_id needed
-    })
+    try {
+      // Get the latest balance for this item/size/brand combination
+      const { data: latestTransaction } = await supabase
+        .from("stock_transactions")
+        .select("balance")
+        .eq("item_id", itemId)
+        .eq("size_id", sizeId)
+        .eq("brand", brand.trim())
+        .order("transaction_date", { ascending: false })
+        .order("created_at", { ascending: false })
+        .limit(1)
 
-    if (error) {
-      alert("Error adding stock: " + error.message)
-    } else {
-      // Reset form
+      // Calculate new balance: previous balance + received quantity
+      const previousBalance = latestTransaction?.[0]?.balance || 0
+      const newBalance = previousBalance + qty
+
+      const { error } = await supabase.from("stock_transactions").insert({
+        transaction_date: format(date, "yyyy-MM-dd"),
+        item_id: itemId,
+        size_id: sizeId,
+        brand: brand.trim(),
+        received_quantity: qty,
+        issued_quantity: 0,
+        balance: newBalance,
+        transaction_type: transactionType,
+        grn_number: transactionType !== "Balance Forward" ? grnNumber.trim() : null,
+        // Shared workspace mode - no user_id needed
+      })
+
+      if (error) throw error
+
+      // Reset form on success
       setDate(new Date())
       setItemId("")
       setSizeId("")
@@ -90,6 +105,9 @@ export function AddStockForm({ items, sizes }: AddStockFormProps) {
       setTransactionType("Received")
       alert("Stock added successfully!")
       router.refresh()
+
+    } catch (error: any) {
+      alert("Error adding stock: " + (error?.message || "Unknown error"))
     }
 
     setIsSubmitting(false)
