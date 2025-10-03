@@ -20,31 +20,48 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      setUser(session?.user ?? null)
-      setLoading(false)
+      try {
+        console.log('Getting session...')
+        const { data: { session }, error } = await supabase.auth.getSession()
+        console.log('Session result:', { session: session?.user?.email, error })
+        setUser(session?.user ?? null)
+        setLoading(false)
+      } catch (error) {
+        console.error('Session error:', error)
+        setLoading(false)
+      }
     }
 
     getSession()
 
+    // Add timeout to prevent infinite loading
+    const timeout = setTimeout(() => {
+      console.log('Auth timeout - forcing loading to false')
+      setLoading(false)
+    }, 5000)
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log('Auth state changed:', event, session?.user?.email)
+        clearTimeout(timeout) // Clear timeout since we got a response
         setUser(session?.user ?? null)
         setLoading(false)
         
-        // Temporarily disabled until migration is run
+        // Temporarily disable seeding to avoid issues
         // if (event === 'SIGNED_IN' && session?.user) {
         //   try {
         //     await seedInitialDataForUser(session.user.id)
         //   } catch (error) {
-        //     console.log('Seeding skipped - migration may not be complete:', error)
+        //     console.log('Seeding error (this is normal for existing users):', error)
         //   }
         // }
       }
     )
 
-    return () => subscription.unsubscribe()
+    return () => {
+      subscription.unsubscribe()
+      clearTimeout(timeout)
+    }
   }, [supabase.auth])
 
   const signOut = async () => {

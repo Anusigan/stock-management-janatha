@@ -57,27 +57,36 @@ export function Dashboard() {
 
       try {
         console.log('Fetching dashboard data...')
-        // Fetch user's items, sizes, and transactions (user-isolated)
-        const [itemsResult, sizesResult, transactionsResult] = await Promise.all([
-          supabase.from("items").select("*").order("name"),
-          supabase.from("sizes").select("*").order("name"),
-          supabase
-            .from("stock_transactions")
-            .select(`
-              id,
-              transaction_date,
-              item_id,
-              size_id,
-              brand,
-              received_quantity,
-              issued_quantity,
-              balance,
-              items (name),
-              sizes (name)
-            `)
-            .order("transaction_date", { ascending: false })
-            .order("created_at", { ascending: false })
-        ])
+        
+        // Test simple query first
+        const testResult = await supabase.from("items").select("count", { count: "exact" })
+        console.log('Test query result:', testResult)
+        
+        // Fetch data with error handling for each table
+        const itemsResult = await supabase.from("items").select("*").order("name")
+        console.log('Items result:', itemsResult)
+        
+        const sizesResult = await supabase.from("sizes").select("*").order("name")
+        console.log('Sizes result:', sizesResult)
+        
+        const transactionsResult = await supabase
+          .from("stock_transactions")
+          .select(`
+            id,
+            transaction_date,
+            item_id,
+            size_id,
+            brand,
+            received_quantity,
+            issued_quantity,
+            balance,
+            items (name),
+            sizes (name)
+          `)
+          .order("transaction_date", { ascending: false })
+          .order("created_at", { ascending: false })
+        
+        console.log('Transactions result:', transactionsResult)
 
         console.log('Data fetch results:', {
           items: itemsResult.data?.length || 0,
@@ -88,9 +97,21 @@ export function Dashboard() {
           transactionsError: transactionsResult.error
         })
 
-        if (itemsResult.data) setItems(itemsResult.data)
-        if (sizesResult.data) setSizes(sizesResult.data)
-        if (transactionsResult.data) {
+        if (itemsResult.error) {
+          console.error('Items error:', itemsResult.error)
+        } else if (itemsResult.data) {
+          setItems(itemsResult.data)
+        }
+        
+        if (sizesResult.error) {
+          console.error('Sizes error:', sizesResult.error)
+        } else if (sizesResult.data) {
+          setSizes(sizesResult.data)
+        }
+        
+        if (transactionsResult.error) {
+          console.error('Transactions error:', transactionsResult.error)
+        } else if (transactionsResult.data) {
           // Transform the data to match expected format
           const transformedTransactions: Transaction[] = transactionsResult.data.map((t: RawTransaction) => ({
             ...t,

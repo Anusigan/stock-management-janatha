@@ -65,7 +65,6 @@ export function AddStockForm({ items, sizes }: AddStockFormProps) {
     setIsSubmitting(true)
 
     const { error } = await supabase.from("stock_transactions").insert({
-      // user_id: user?.id, // Temporarily disabled until migration
       transaction_date: format(date, "yyyy-MM-dd"),
       item_id: itemId,
       size_id: sizeId,
@@ -75,6 +74,7 @@ export function AddStockForm({ items, sizes }: AddStockFormProps) {
       balance: qty,
       transaction_type: transactionType,
       grn_number: transactionType !== "Balance Forward" ? grnNumber.trim() : null,
+      // user_id will be automatically set by database trigger
     })
 
     if (error) {
