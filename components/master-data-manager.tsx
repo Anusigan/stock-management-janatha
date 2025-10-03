@@ -65,7 +65,7 @@ export function MasterDataManager({ initialItems, initialSizes, initialCustomers
     setIsAddingItem(true)
     const { data, error } = await supabase.from("items").insert({ 
       name: newItem.trim()
-      // user_id will be automatically set by database trigger
+      // Shared workspace mode - no user_id needed
     }).select().single()
 
     if (error) {
@@ -86,7 +86,7 @@ export function MasterDataManager({ initialItems, initialSizes, initialCustomers
     setIsAddingSize(true)
     const { data, error } = await supabase.from("sizes").insert({ 
       name: newSize.trim()
-      // user_id will be automatically set by database trigger
+      // Shared workspace mode - no user_id needed
     }).select().single()
 
     if (error) {

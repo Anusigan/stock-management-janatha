@@ -134,11 +134,11 @@ export function Dashboard() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="bg-gradient-to-br from-slate-900 via-gray-800 to-slate-900 p-4 rounded-2xl shadow-xl mb-6 mx-auto w-fit">
+          <div className="w-20 h-20 mx-auto mb-6">
             <img 
               src="/flux-logo.png" 
               alt="Flux Logo" 
-              className="h-12 w-12 object-contain mx-auto brightness-0 invert"
+              className="w-full h-full object-cover rounded-2xl shadow-xl"
             />
           </div>
           <h2 className="text-xl font-semibold text-slate-800 mb-2">Flux</h2>
@@ -158,11 +158,11 @@ export function Dashboard() {
               <div className="flex items-center gap-4">
                 {/* Compact logo */}
                 <div className="relative">
-                  <div className="bg-gradient-to-br from-white to-gray-100 p-2 rounded-full shadow-lg border border-white/30">
+                  <div className="w-10 h-10">
                     <img 
                       src="/flux-logo.png" 
                       alt="Flux Logo" 
-                      className="h-5 w-5 object-contain"
+                      className="w-full h-full object-cover rounded-full shadow-lg border border-white/30"
                     />
                   </div>
                 </div>

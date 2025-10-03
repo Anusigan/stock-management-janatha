@@ -74,7 +74,7 @@ export function AddStockForm({ items, sizes }: AddStockFormProps) {
       balance: qty,
       transaction_type: transactionType,
       grn_number: transactionType !== "Balance Forward" ? grnNumber.trim() : null,
-      // user_id will be automatically set by database trigger
+      // Shared workspace mode - no user_id needed
     })
 
     if (error) {

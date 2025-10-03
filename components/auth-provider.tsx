@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { User } from "@supabase/supabase-js"
-import { seedInitialDataForUser } from "@/lib/seed-user-data"
+// Shared workspace mode - no user seeding needed
 
 type AuthContextType = {
   user: User | null
@@ -47,14 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(session?.user ?? null)
         setLoading(false)
         
-        // Temporarily disable seeding to avoid issues
-        // if (event === 'SIGNED_IN' && session?.user) {
-        //   try {
-        //     await seedInitialDataForUser(session.user.id)
-        //   } catch (error) {
-        //     console.log('Seeding error (this is normal for existing users):', error)
-        //   }
-        // }
+        // Shared workspace mode - no user-specific seeding needed
       }
     )
 

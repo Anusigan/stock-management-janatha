@@ -19,11 +19,11 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
         <div className="text-center space-y-4">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-slate-900 to-gray-800 rounded-3xl flex items-center justify-center animate-pulse p-3">
+          <div className="mx-auto w-16 h-16 bg-white rounded-3xl flex items-center justify-center animate-pulse p-2">
             <img 
               src="/flux-logo.png" 
               alt="Flux Logo" 
-              className="h-10 w-10 object-contain brightness-0 invert"
+              className="w-full h-full object-contain"
             />
           </div>
           <div className="space-y-2">

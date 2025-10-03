@@ -83,7 +83,7 @@ export function IssueStockForm({ items, sizes }: IssueStockFormProps) {
       balance: -qty,
       transaction_type: "Issued",
       customer_id: customerId,
-      // user_id will be automatically set by database trigger
+      // Shared workspace mode - no user_id needed
       delivery_order_number: deliveryOrderNumber.trim(),
     })
 
