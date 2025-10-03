@@ -16,7 +16,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Trash2, Plus, Package, Ruler, Users } from "lucide-react"
+import { Trash2, Plus, Ruler, Users } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 type Item = {
@@ -155,7 +155,11 @@ export function MasterDataManager({ initialItems, initialSizes, initialCustomers
         <CardHeader className="bg-gray-50 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Package className="h-5 w-5 text-black" />
+              <img 
+                src="/flux-logo.png" 
+                alt="Flux Logo" 
+                className="h-5 w-5 object-contain"
+              />
               <CardTitle className="text-black">Items</CardTitle>
             </div>
             <Dialog open={itemDialogOpen} onOpenChange={setItemDialogOpen}>

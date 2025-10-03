@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/client"
 import { DashboardStats } from "@/components/dashboard-stats"
 import { StockTabs } from "@/components/stock-tabs"
 import { UserMenu } from "@/components/user-menu"
-import { Package, Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
 
 interface Item {
   id: string
@@ -103,8 +103,16 @@ export function Dashboard() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <Loader2 className="h-8 w-8 animate-spin text-slate-600 mx-auto mb-4" />
-          <p className="text-slate-600">Loading dashboard...</p>
+          <div className="bg-gradient-to-br from-slate-900 via-gray-800 to-slate-900 p-4 rounded-2xl shadow-xl mb-6 mx-auto w-fit">
+            <img 
+              src="/flux-logo.png" 
+              alt="Flux Logo" 
+              className="h-12 w-12 object-contain mx-auto brightness-0 invert"
+            />
+          </div>
+          <h2 className="text-xl font-semibold text-slate-800 mb-2">Flux</h2>
+          <p className="text-slate-600 mb-4">Stock Management Simplified</p>
+          <Loader2 className="h-6 w-6 animate-spin text-slate-600 mx-auto" />
         </div>
       </div>
     )
@@ -120,17 +128,21 @@ export function Dashboard() {
                 {/* Compact logo */}
                 <div className="relative">
                   <div className="bg-gradient-to-br from-white to-gray-100 p-2 rounded-full shadow-lg border border-white/30">
-                    <Package className="h-5 w-5 text-gray-800" />
+                    <img 
+                      src="/flux-logo.png" 
+                      alt="Flux Logo" 
+                      className="h-5 w-5 object-contain"
+                    />
                   </div>
                 </div>
                 
                 {/* Compact title */}
                 <div className="flex items-center gap-3">
                   <h1 className="text-xl font-bold bg-gradient-to-r from-white to-gray-100 bg-clip-text text-transparent">
-                    Stock Manager
+                    Flux
                   </h1>
                   <span className="text-xs text-gray-400 font-medium">
-                    by Tekvo Labs
+                    Stock Management Simplified
                   </span>
                 </div>
               </div>

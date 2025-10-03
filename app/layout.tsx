@@ -7,8 +7,8 @@ import { Toaster } from '@/components/ui/toaster'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Stock Manager - Tekvo Labs',
-  description: 'Advanced Inventory Management System',
+  title: 'Flux - Stock Management Simplified',
+  description: 'Modern, intuitive inventory management system that simplifies stock tracking and operations',
   generator: 'v0.app',
 }
 
@@ -19,6 +19,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/flux-logo.png" />
+        <link rel="apple-touch-icon" href="/flux-logo.png" />
+      </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable} antialiased bg-white`}>
         <AuthProvider>
           {children}

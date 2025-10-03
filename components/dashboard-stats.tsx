@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { TrendingUp, TrendingDown, Package, AlertTriangle } from "lucide-react"
+import { TrendingUp, TrendingDown, AlertTriangle } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 
@@ -137,7 +137,11 @@ export function DashboardStats({ transactions }: DashboardStatsProps) {
       <Card className="border-2 hover:shadow-xl transition-all duration-300">
         <CardHeader>
           <CardTitle className="text-lg font-bold flex items-center gap-2">
-            <Package className="h-5 w-5" />
+            <img 
+              src="/flux-logo.png" 
+              alt="Flux Logo" 
+              className="h-5 w-5 object-contain"
+            />
             Current Stock Overview
           </CardTitle>
         </CardHeader>

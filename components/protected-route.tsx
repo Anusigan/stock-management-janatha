@@ -3,7 +3,7 @@
 import { useAuth } from "@/components/auth-provider"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
-import { Package } from "lucide-react"
+
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth()
@@ -19,8 +19,12 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center">
         <div className="text-center space-y-4">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-slate-900 to-gray-800 rounded-3xl flex items-center justify-center animate-pulse">
-            <Package className="h-8 w-8 text-white" />
+          <div className="mx-auto w-16 h-16 bg-gradient-to-br from-slate-900 to-gray-800 rounded-3xl flex items-center justify-center animate-pulse p-3">
+            <img 
+              src="/flux-logo.png" 
+              alt="Flux Logo" 
+              className="h-10 w-10 object-contain brightness-0 invert"
+            />
           </div>
           <div className="space-y-2">
             <h2 className="text-xl font-semibold text-gray-700">Loading...</h2>
