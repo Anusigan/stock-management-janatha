@@ -56,7 +56,8 @@ export function Dashboard() {
       const supabase = createClient()
 
       try {
-        // Fetch items, sizes, and transactions
+        console.log('Fetching dashboard data...')
+        // Fetch user's items, sizes, and transactions (user-isolated)
         const [itemsResult, sizesResult, transactionsResult] = await Promise.all([
           supabase.from("items").select("*").order("name"),
           supabase.from("sizes").select("*").order("name"),
@@ -77,6 +78,15 @@ export function Dashboard() {
             .order("transaction_date", { ascending: false })
             .order("created_at", { ascending: false })
         ])
+
+        console.log('Data fetch results:', {
+          items: itemsResult.data?.length || 0,
+          sizes: sizesResult.data?.length || 0,
+          transactions: transactionsResult.data?.length || 0,
+          itemsError: itemsResult.error,
+          sizesError: sizesResult.error,
+          transactionsError: transactionsResult.error
+        })
 
         if (itemsResult.data) setItems(itemsResult.data)
         if (sizesResult.data) setSizes(sizesResult.data)

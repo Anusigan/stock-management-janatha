@@ -3,6 +3,7 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { createClient } from "@/lib/supabase/client"
+import { useAuth } from "@/components/auth-provider"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -35,6 +36,7 @@ type IssueStockFormProps = {
 }
 
 export function IssueStockForm({ items, sizes }: IssueStockFormProps) {
+  const { user } = useAuth()
   const [date, setDate] = useState<Date>(new Date())
   const [itemId, setItemId] = useState("")
   const [sizeId, setSizeId] = useState("")
@@ -72,6 +74,7 @@ export function IssueStockForm({ items, sizes }: IssueStockFormProps) {
     setIsSubmitting(true)
 
     const { error } = await supabase.from("stock_transactions").insert({
+      // user_id: user?.id, // Temporarily disabled until migration
       transaction_date: format(date, "yyyy-MM-dd"),
       item_id: itemId,
       size_id: sizeId,

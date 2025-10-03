@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { createClient } from "@/lib/supabase/client"
 import { User } from "@supabase/supabase-js"
+import { seedInitialDataForUser } from "@/lib/seed-user-data"
 
 type AuthContextType = {
   user: User | null
@@ -27,9 +28,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     getSession()
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
+        console.log('Auth state changed:', event, session?.user?.email)
         setUser(session?.user ?? null)
         setLoading(false)
+        
+        // Temporarily disabled until migration is run
+        // if (event === 'SIGNED_IN' && session?.user) {
+        //   try {
+        //     await seedInitialDataForUser(session.user.id)
+        //   } catch (error) {
+        //     console.log('Seeding skipped - migration may not be complete:', error)
+        //   }
+        // }
       }
     )
 

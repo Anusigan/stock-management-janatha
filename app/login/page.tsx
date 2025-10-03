@@ -50,13 +50,17 @@ export default function LoginPage() {
           setMessage("Account created successfully! Check your email for the confirmation link.")
         }
       } else {
-        const { error } = await supabase.auth.signInWithPassword({
+        console.log('Attempting to sign in...')
+        const { data, error } = await supabase.auth.signInWithPassword({
           email,
           password,
         })
         if (error) {
+          console.error('Sign in error:', error)
           setMessage("Invalid email or password. Please try again.")
         } else {
+          console.log('Sign in successful:', data.user?.email)
+          setMessage("Signing in...")
           router.push("/")
           router.refresh()
         }
@@ -176,13 +180,9 @@ export default function LoginPage() {
                 </div>
               ) : (
                 <div className="flex items-center justify-center">
-                  <Image 
-                    src="/flux-logo.png" 
-                    alt="Flux Logo" 
-                    width={16}
-                    height={16}
-                    className="mr-2 object-contain brightness-0 invert"
-                  />
+                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                  </svg>
                   {isSignUp ? "Create Account" : "Sign In"}
                 </div>
               )}

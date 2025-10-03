@@ -3,6 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import { createClient } from "@/lib/supabase/client"
+import { useAuth } from "@/components/auth-provider"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -41,6 +42,7 @@ type MasterDataManagerProps = {
 }
 
 export function MasterDataManager({ initialItems, initialSizes, initialCustomers }: MasterDataManagerProps) {
+  const { user } = useAuth()
   const [items, setItems] = useState<Item[]>(initialItems)
   const [sizes, setSizes] = useState<Size[]>(initialSizes)
   const [customers, setCustomers] = useState<Customer[]>(initialCustomers)
@@ -61,7 +63,10 @@ export function MasterDataManager({ initialItems, initialSizes, initialCustomers
     if (!newItem.trim()) return
 
     setIsAddingItem(true)
-    const { data, error } = await supabase.from("items").insert({ name: newItem.trim() }).select().single()
+    const { data, error } = await supabase.from("items").insert({ 
+      name: newItem.trim()
+      // user_id: user?.id // Temporarily disabled until migration
+    }).select().single()
 
     if (error) {
       alert("Error adding item: " + error.message)
@@ -79,7 +84,10 @@ export function MasterDataManager({ initialItems, initialSizes, initialCustomers
     if (!newSize.trim()) return
 
     setIsAddingSize(true)
-    const { data, error } = await supabase.from("sizes").insert({ name: newSize.trim() }).select().single()
+    const { data, error } = await supabase.from("sizes").insert({ 
+      name: newSize.trim()
+      // user_id: user?.id // Temporarily disabled until migration
+    }).select().single()
 
     if (error) {
       alert("Error adding size: " + error.message)
