@@ -7,9 +7,9 @@ import { Toaster } from '@/components/ui/toaster'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Flux - Stock Management Simplified',
-  description: 'Modern, intuitive inventory management system that simplifies stock tracking and operations',
-  generator: 'v0.app',
+  title: 'Flux - Stock Management Simplified | TekvoLabs',
+  description: 'Modern, intuitive inventory management system that simplifies stock tracking and operations. Powered by TekvoLabs.',
+  generator: 'TekvoLabs',
 }
 
 export default function RootLayout({

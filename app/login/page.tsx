@@ -78,13 +78,13 @@ export default function LoginPage() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md border border-white/20 bg-gradient-to-br from-white/80 to-gray-50/80 backdrop-blur-xl shadow-2xl">
         <CardHeader className="space-y-4 text-center">
-          <div className="mx-auto w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg border border-white/20 p-2">
+          <div className="mx-auto w-16 h-16 rounded-2xl shadow-lg border border-white/20">
             <Image 
               src="/flux-logo.png" 
               alt="Flux Logo" 
-              width={40}
-              height={40}
-              className="object-contain"
+              width={64}
+              height={64}
+              className="w-full h-full object-cover rounded-2xl"
             />
           </div>
           <div>
@@ -207,6 +207,26 @@ export default function LoginPage() {
             >
               {isSignUp ? "Sign in here" : "Create account"}
             </button>
+          </div>
+
+          {/* TekvoLabs Branding */}
+          <div className="text-center pt-4 border-t border-gray-100 mt-4">
+            <div className="flex items-center justify-center space-x-2 text-xs text-gray-500">
+              <span>Powered by</span>
+              <a 
+                href="https://tekvolabs.com/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-1 hover:text-gray-700 transition-colors"
+              >
+                <img 
+                  src="/tekvolabs-logo.png" 
+                  alt="TekvoLabs" 
+                  className="w-4 h-4 object-contain"
+                />
+                <span className="font-medium">TekvoLabs</span>
+              </a>
+            </div>
           </div>
         </CardContent>
       </Card>

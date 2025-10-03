@@ -145,6 +145,24 @@ export function Dashboard() {
           <p className="text-slate-600 mb-4">Stock Management Simplified</p>
           <Loader2 className="h-6 w-6 animate-spin text-slate-600 mx-auto" />
         </div>
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
+          <div className="flex items-center space-x-2 text-xs text-gray-400">
+            <span>Powered by</span>
+            <a 
+              href="https://tekvolabs.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center space-x-1 hover:text-gray-600 transition-colors"
+            >
+              <img 
+                src="/tekvolabs-logo.png" 
+                alt="TekvoLabs" 
+                className="w-4 h-4 object-contain"
+              />
+              <span className="font-medium">TekvoLabs</span>
+            </a>
+          </div>
+        </div>
       </div>
     )
   }
@@ -188,6 +206,28 @@ export function Dashboard() {
         <DashboardStats transactions={transactions} />
         <StockTabs initialItems={items} initialSizes={sizes} initialTransactions={transactions} />
       </main>
+
+      {/* Footer */}
+      <footer className="mt-auto py-6 px-6">
+        <div className="container mx-auto">
+          <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
+            <span>Powered by</span>
+            <a 
+              href="https://tekvolabs.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 hover:text-gray-700 transition-colors"
+            >
+              <img 
+                src="/tekvolabs-logo.png" 
+                alt="TekvoLabs" 
+                className="w-5 h-5 object-contain"
+              />
+              <span className="font-medium">TekvoLabs</span>
+            </a>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
